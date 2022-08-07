@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple cart with react</title>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <script>
+        function generateCart(name, age) {
+            return React.createElement(
+                'div',
+                {
+                    class: 'cart',
+                },
+                React.createElement('span', null, `name: ${name} ==> `),
+                React.createElement('span', null, `age: ${age}`))
+        }
+
+        const userData = [{
+            name: 'Mohammad',
+            age: 30
+        }, {
+            name: 'Amin',
+            age: 24
+        }, {
+            name: 'Ali',
+            age: 20
+        }]
+
+        const carts = userData.map((data) => {
+            return generateCart(data.name, data.age);
+        })
+
+        const container = React.createElement(
+            'div', {
+            class: 'container',
+        },
+            carts
+        )
+
+        const $root = ReactDOM.createRoot(document.getElementById("root"));
+        $root.render(container);
+
+        // ReactDOM.render(container, documnet.getElementById("root"));
+    </script>
+</body>
+
+</html>
