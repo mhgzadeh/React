@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import SideBar from './SideBar'
+import Boxes from "./Boxes";
 
 export default class Main extends Component {
 
@@ -14,47 +16,34 @@ export default class Main extends Component {
 
     handelToggleBtn(id) {
         console.log(id);
+        console.log(this);
         const activeBoxes = [...this.state.activeBoxes];
 
         if (activeBoxes.includes(id)) {
             activeBoxes.splice(activeBoxes.indexOf(id), 1);
+            console.log(activeBoxes);
         } else {
             activeBoxes.push(id);
+            console.log(activeBoxes, 'else');
         }
 
         this.setState((state) => {
-            return {...state, activeBoxes}
+            return { ...state, activeBoxes }
         })
     }
 
     render() {
-
-        const toggle = this.state.boxes.map(box => {
-            return (
-                <div className="toggle">
-                    <span>{box.title}</span>
-                    <label className="toggle-control">
-                        <input type="checkbox" checked={this.state.activeBoxes.includes(box.id)} />
-                        <span className="control" onClick={(e) => this.handelToggleBtn(box.id)}></span>
-                    </label>
-                </div>
-            )
-        })
-
-        const boxes = this.state.boxes.map(box => {
-            if (this.state.activeBoxes.includes(box.id)) {
-                return <div className="box">{box.title}</div>
-            }
-        })
-
         return (
             <React.Fragment>
-                <aside>
-                    {toggle}
-                </aside>
-                <div className="box-wrapper">
-                    {boxes}
-                </div>
+                <SideBar
+                    handelToggle={this.handelToggleBtn.bind(this)}
+                    boxes={this.state.boxes}
+                    activeBoxes={this.state.activeBoxes}
+                />
+                <Boxes
+                    boxes={this.state.boxes}
+                    activeBoxes={this.state.activeBoxes}
+                />
             </React.Fragment>
         )
     }
