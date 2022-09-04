@@ -13,7 +13,7 @@ export default class Click extends Component {
         return (
             <div>
                 <p>Clicked count is {this.state.clickCount}</p>
-                <button onClick={this.handleClick.bind(this)}>Click Me</button>
+                <button onClick={this.handleClick}>Click Me</button>
             </div>
         )
     }
