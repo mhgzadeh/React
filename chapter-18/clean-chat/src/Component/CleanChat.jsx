@@ -1,84 +1,55 @@
 import React, { Component } from 'react'
+import Body from "./Body";
+import Footer from "./Footer";
+import Heading from "./Heading";
 
 export default class CleanChat extends Component {
-    render() {
-        return (
-            <div className="container bootstrap snippets">
-                <div className="col-md-7 col-xs-12 col-md-offset-2">
 
-                    <div className="panel" id="chat">
-                        <div className="panel-heading">
-                            <h3 className="panel-title">
-                                <i className="icon wb-chat-text" aria-hidden="true"></i> Chat
-                            </h3>
-                        </div>
-                        <div className="panel-body">
-                            <div className="chats">
-                                <div className="chat">
-                                    <div className="chat-avatar">
-                                        <a className="avatar avatar-online" data-toggle="tooltip" href="#" data-placement="right"
-                                            title="" data-original-title="June Lane">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="..." />
-                                            <i></i>
-                                        </a>
-                                    </div>
-                                    <div className="chat-body">
-                                        <div className="chat-content">
-                                            <p>
-                                                Good morning, sir.
-                                                <br />What can I do for you?
-                                            </p>
-                                            <time className="chat-time" dateTime="2015-07-01T11:37">11:37:08 am</time>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="chat chat-left">
-                                    <div className="chat-avatar">
-                                        <a className="avatar avatar-online" data-toggle="tooltip" href="#" data-placement="left"
-                                            title="" data-original-title="Edward Fletcher">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="..." />
-                                                <i></i>
-                                        </a>
-                                    </div>
-                                    <div className="chat-body">
-                                        <div className="chat-content">
-                                            <p>Well, I am just looking around.</p>
-                                            <time className="chat-time" dateTime="2015-07-01T11:39">11:39:57 am</time>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="chat">
-                                    <div className="chat-avatar">
-                                        <a className="avatar avatar-online" data-toggle="tooltip" href="#" data-placement="right"
-                                            title="" data-original-title="June Lane">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="..." />
-                                                <i></i>
-                                        </a>
-                                    </div>
-                                    <div className="chat-body">
-                                        <div className="chat-content">
-                                            <p>
-                                                If necessary, please ask me.
-                                            </p>
-                                            <time className="chat-time" dateTime="2015-07-01T11:40">11:40:10 am</time>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="panel-footer">
-                            <form>
-                                <div className="input-group">
-                                    <input type="text" className="form-control" placeholder="Say something" />
-                                    <span className="input-group-btn">
-                                        <button className="btn btn-primary" type="button">Send</button>
-                                    </span>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+   constructor(props) {
+      super(props);
+      this.state = {
+         title: 'Chat',
+         chatsList: [
+            { type: 'sent', message: 'Good morning, sir. What can I do for you?', time: '11:37:08 am' },
+            { type: 'recive', message: 'Well, I am just looking around.', time: '11:39:57 am' },
+            { type: 'sent', message: 'If necessary, please ask me.', time: '11:40:10 am' },
+         ],
+         gravatars: {
+            user1: 'https://bootdey.com/img/Content/avatar/avatar1.png',
+            user2: 'https://bootdey.com/img/Content/avatar/avatar2.png'
+         }
+      }
+
+      this,this.handleSubmit = this.handleSubmit.bind(this)
+   }
+
+   handleSubmit(message) {
+      console.log(message);
+      this.setState(state => {
+         return {
+            ...state,
+            chatsList:[
+               ...state.chatsList,
+               {type: 'sent', message, time: new Date().toLocaleTimeString()}
+            ]
+         }
+      })
+   }
+
+   render() {
+      return (
+         <div className="container bootstrap snippets">
+            <div className="col-md-7 col-xs-12 col-md-offset-2">
+               <div className="panel" id="chat">
+                  <Heading title={this.state.title} />
+                  <Body
+                     chatsList={this.state.chatsList}
+                     gravatars={this.state.gravatars}
+                  />
+                  <Footer handleSubmit={this.handleSubmit} />
+               </div>
             </div>
-        )
-    }
+         </div>
+      )
+   }
 }
